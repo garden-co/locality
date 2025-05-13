@@ -1,0 +1,149 @@
+classDiagram
+    %% Main account and root structure
+    JazzAccount --> UserProfile : contains
+    JazzAccount --> AccountRoot : contains
+    AccountRoot --> OrganizationList : contains
+    OrganizationList --> Organization : contains
+    
+    %% Organization structure
+    Organization --> TeamList : contains
+    Organization --> ProjectList : contains
+    Organization --> LabelList : contains
+    Organization --> LiveUpdates : contains
+    
+    %% Teams and issues
+    TeamList --> Team : contains
+    Team --> CycleList : contains
+    Team --> IssueList : contains
+    
+    %% Project structure
+    ProjectList --> Project : contains
+    Project --> IssueList : references
+    
+    %% Issues and related items
+    IssueList --> Issue : contains
+    Issue --> Issue : parentIssue
+    Issue --> IssueList : childIssues
+    Issue --> Team : belongs to
+    Issue --> Project : belongs to
+    Issue --> UserProfile : assignee
+    Issue --> Cycle : belongs to
+    Issue --> LabelList : has
+    Issue --> CommentList : has
+    Issue --> AttachmentList : has
+    Issue --> ReactionsList : has
+    
+    %% Comments
+    CommentList --> Comment : contains
+    Comment --> Issue : parentIssue
+    Comment --> Comment : parentComment
+    Comment --> ReactionsList : has
+    Comment --> AttachmentList : has
+    
+    %% Supporting entities
+    AttachmentList --> Attachment : contains
+    LabelList --> Label : contains
+    
+    %% Class properties
+    class JazzAccount {
+        profile: UserProfile
+        root: AccountRoot
+    }
+    
+    class AccountRoot {
+        organizations: OrganizationList
+        version: number
+    }
+    
+    class Organization {
+        name: string
+        slug: string
+        teams: TeamList
+        projects: ProjectList
+        labels: LabelList
+        liveUpdates: LiveUpdates
+        deleted: boolean
+    }
+    
+    class Team {
+        name: string
+        slug: string
+        icon: string
+        color: string
+        cycles: CycleList
+        issues: IssueList
+        deleted: boolean
+    }
+    
+    class Project {
+        name: string
+        slug: string
+        description: string
+        status: string
+        icon: string
+        percentComplete: number
+        startDate: Date
+        endDate: Date
+        issuesRef: IssueList
+        deleted: boolean
+    }
+    
+    class Issue {
+        identifier: string
+        title: string
+        description: string
+        assignee: UserProfile
+        estimate: number
+        dueDate: Date
+        statusType: string
+        priority: string
+        cycle: Cycle
+        project: Project
+        team: Team
+        parentIssue: Issue
+        childIssues: IssueList
+        attachments: AttachmentList
+        labels: LabelList
+        comments: CommentList
+        reactions: ReactionsList
+        deleted: boolean
+    }
+    
+    class UserProfile {
+        name: string
+        email: string
+        avatarUrl: string
+        status: string
+    }
+    
+    class Cycle {
+        number: number
+        name: string
+        startDate: Date
+        endDate: Date
+        progress: number
+        active: boolean
+        issuesRef: IssueList
+    }
+    
+    class Comment {
+        content: string
+        parentIssue: Issue
+        parentComment: Comment
+        reactions: ReactionsList
+        attachments: AttachmentList
+        deleted: boolean
+    }
+    
+    class Label {
+        name: string
+        color: string
+        deleted: boolean
+    }
+    
+    class Attachment {
+        name: string
+        file: FileStream
+        type: string
+        deleted: boolean
+    }

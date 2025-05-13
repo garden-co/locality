@@ -1,0 +1,62 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+
+
+# Jazz 0.12.0 Deeply Resolved Data Pattern
+
+## Core Loading Pattern Rules
+
+1. **Page-Level Loading (useAccount only)**:
+   - Use `useAccount` exactly ONCE in page components
+   - Load data shallowly at the page level with `true` instead of deep structures
+   - Never use `useCoState` in page components
+   - Pass shallowly loaded data down to child components
+
+2. **Component-Level Loading (useCoState)**:
+   - Use `useCoState` in non-page components to deeply load specific data
+   - Always handle loading states properly (undefined vs null)
+   - Perform deep loading close to where the data is actually needed
+
+3. **Resolve API Syntax**:
+   - Shallow loading: `property: true`
+   - Deep collection loading: `collection: { $each: true }`
+   - Nested property loading: `property: { nestedProperty: true }`
+
+## Loading State Handling
+
+- `undefined` → Data is still loading
+- `null` → Data not found or access denied
+- Handle these states before attempting to use the data
+
+```tsx
+if (data === undefined) return <div>Loading...</div>;
+if (data === null) return <div>Not found or access denied</div>;
+```
+
+## Performance Optimization Techniques
+
+1. **Conditional Loading**:
+   - Only deeply load data for specific items that are needed
+   - Use conditional loading patterns to avoid unnecessary data fetching
+
+2. **Data Processing**:
+   - Use `useMemo` to avoid recalculating filtered/processed data
+   - Ensure React Hook rules are followed (no conditional hook calls)
+
+## Implementation Flow
+
+1. Page component shallowly loads and identifies needed data
+2. Child components receive shallow references
+3. Child components deeply load specific data they need
+4. Components handle loading states appropriately
+5. Once loaded, components can safely access and work with deeply loaded data
+
+This approach optimizes for:
+- Performance (only loading what's needed when it's needed)
+- Type safety (using the new resolve API)
+- Error handling (proper loading state management)
+- Component isolation (each component handles its own data needs)
+
