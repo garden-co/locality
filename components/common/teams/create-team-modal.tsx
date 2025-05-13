@@ -9,9 +9,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { useParams } from 'next/navigation';
-import { Team, IssueList } from '@/lib/jazz-schema';
+import { createNewTeam, JazzAccount } from '@/lib/jazz-schema';
 import { generateSlug } from '@/lib/utils';
 import { useAccount } from 'jazz-react';
+import { Group } from 'jazz-tools';
 
 interface CreateTeamModalProps {
    trigger?: React.ReactNode;
@@ -59,6 +60,10 @@ export function CreateTeamModal({ trigger }: CreateTeamModalProps) {
       setIsSubmitting(true);
       setError(null);
 
+      if (!organization) {
+         throw new Error('Organization not found');
+      }
+
       try {
          if (!teams) {
             throw new Error('Could not access teams list');
@@ -78,13 +83,11 @@ export function CreateTeamModal({ trigger }: CreateTeamModalProps) {
             throw new Error('A team with this name already exists');
          }
 
-         // Create new Team
-         const newTeam = Team.create({
-            name: name.trim(),
-            slug: teamSlug,
+         const { team: newTeam } = createNewTeam(JazzAccount.getMe(), {
+            teamName: name.trim(),
+            organizationGroup: organization._owner.castAs(Group),
             icon: icon,
             color: color,
-            issues: IssueList.create([]),
          });
 
          // Add to teams list

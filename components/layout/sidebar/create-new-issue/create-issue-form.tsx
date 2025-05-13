@@ -141,7 +141,7 @@ export function CreateIssueForm({ organization, teamId, closeModal }: CreateIssu
       toast.success('Issue created');
 
       // Create the issue and add it to the team's issues
-      const newIssue = Issue.create(addIssueForm);
+      const newIssue = Issue.create(addIssueForm, team._owner);
       team.issues.push(newIssue);
 
       if (!createMore) {
