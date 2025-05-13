@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import BulletList from '@tiptap/extension-bullet-list';
@@ -19,9 +18,6 @@ interface IssueProps {
 }
 
 export function Issue({ issueData, currentUserId }: IssueProps) {
-   const [title, setTitle] = useState(issueData.title || '');
-   const [description, setDescription] = useState(issueData.description || '');
-
    const editor = useEditor(
       {
          extensions: [
@@ -36,24 +32,19 @@ export function Issue({ issueData, currentUserId }: IssueProps) {
             }),
             ListItem,
          ],
-         content: description,
+         content: issueData.description,
          onUpdate: ({ editor }) => {
             const newContent = editor.getHTML();
-            setDescription(newContent);
-            if (issueData) {
-               issueData.description = newContent;
-            }
+            issueData.description = newContent;
          },
       },
-      [description]
+      []
    );
 
    const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newTitle = e.target.value;
-      setTitle(newTitle);
-      if (issueData) {
-         issueData.title = newTitle;
-      }
+
+      issueData.title = newTitle;
    };
 
    return (
@@ -63,7 +54,7 @@ export function Issue({ issueData, currentUserId }: IssueProps) {
                <div className="flex flex-col gap-4">
                   <input
                      type="text"
-                     value={title}
+                     value={issueData.title || ''}
                      onChange={changeTitle}
                      className="text-2xl font-bold bg-transparent border-0 focus:outline-none focus:ring-0 p-0 w-full"
                   />
