@@ -263,6 +263,26 @@ export class Organization extends CoMap {
    labels = co.ref(LabelList);
    liveUpdates = co.ref(LiveUpdates);
    deleted = co.optional.boolean;
+
+   getTeamsForMember(userProfile: UserProfile) {
+      const allTeams: Team[] = [];
+
+      if (this.teams) {
+         this.teams.forEach((team) => {
+            if (
+               team &&
+               !team.deleted &&
+               team._owner
+                  .castAs(Group)
+                  .members?.some((member) => member.account.profile?.id === userProfile.id)
+            ) {
+               allTeams.push(team);
+            }
+         });
+      }
+
+      return allTeams;
+   }
 }
 
 export class OrganizationList extends CoList.Of(co.ref(Organization)) {}
@@ -289,11 +309,14 @@ export class JazzAccount extends Account {
       // }
    }
 
-   private async initialMigration(me: JazzAccount, creationProps: {
-      name: string;
-      email: string;
-      other?: Record<string, unknown>;
-   }) {
+   private async initialMigration(
+      me: JazzAccount,
+      creationProps: {
+         name: string;
+         email: string;
+         other?: Record<string, unknown>;
+      }
+   ) {
       const { name, email } = creationProps;
       // const profileErrors = UserProfile.validate({ name, email, ...other });
       // if (profileErrors.errors.length > 0) {
@@ -324,12 +347,15 @@ export class JazzAccount extends Account {
    }
 }
 
-export function createNewTeam(me: JazzAccount, props: {
-   teamName: string;
-   organizationGroup: Group;
-   icon?: string;
-   color?: string;
-}) {
+export function createNewTeam(
+   me: JazzAccount,
+   props: {
+      teamName: string;
+      organizationGroup: Group;
+      icon?: string;
+      color?: string;
+   }
+) {
    const privateTeamGroup = Group.create(me);
    privateTeamGroup.extend(props.organizationGroup);
 
@@ -399,14 +425,21 @@ export function createNewTeam(me: JazzAccount, props: {
    };
 }
 
-export function createNewOrganization(me: JazzAccount, props: {
-   teamName: string;
-   orgName: string;
-   orgSlug: string;
-}) {
+export function createNewOrganization(
+   me: JazzAccount,
+   props: {
+      teamName: string;
+      orgName: string;
+      orgSlug: string;
+   }
+) {
    const privateOrgGroup = Group.create(me);
 
-   const { team: defaultTeam, defaultIssue, defaultSubissue } = createNewTeam(me, {
+   const {
+      team: defaultTeam,
+      defaultIssue,
+      defaultSubissue,
+   } = createNewTeam(me, {
       teamName: props.teamName,
       organizationGroup: privateOrgGroup,
    });

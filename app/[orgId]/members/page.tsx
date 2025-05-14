@@ -22,7 +22,8 @@ export default function MembersPage() {
    });
 
    // Find the organization by slug
-   const organization = me?.root?.organizations?.find((org) => org?.slug === orgId) || undefined;
+   const organizations = me?.root?.organizations;
+   const organization = organizations?.find((org) => org?.slug === orgId) || undefined;
 
    // Use our custom hook to get members data for the Header
    const { members, isLoading, isError } = useMembers(organization);

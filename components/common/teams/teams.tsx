@@ -54,11 +54,11 @@ export default function Teams({ teams }: { teams: TeamList | undefined }) {
          <Table>
             <TableHeader>
                <TableRow>
-                  <TableHead className="w-[35%]">Name</TableHead>
+                  <TableHead className="w-[40%]">Name</TableHead>
                   <TableHead className="w-[15%]">Membership</TableHead>
                   <TableHead className="w-[15%]">Identifier</TableHead>
-                  <TableHead className="w-[15%]">Members</TableHead>
-                  <TableHead className="w-[5%]"></TableHead>
+                  <TableHead className="w-[20%]">Members</TableHead>
+                  <TableHead className="w-[10%] text-right">Actions</TableHead>
                </TableRow>
             </TableHeader>
             <TableBody>
@@ -72,7 +72,7 @@ export default function Teams({ teams }: { teams: TeamList | undefined }) {
                      >
                         <TableCell className="py-3">
                            <Link
-                              href={`/${orgId}/team/${team?.slug}`}
+                              href={`/${orgId}/team/${team?.slug}/issues`}
                               className="flex items-center gap-2"
                            >
                               <span
@@ -117,8 +117,8 @@ export default function Teams({ teams }: { teams: TeamList | undefined }) {
                               ))}
                            </div>
                         </TableCell>
-                        <TableCell>
-                           <div className="flex items-center justify-center">
+                        <TableCell className="text-right">
+                           <div className="flex items-center justify-end">
                               <DropdownMenu>
                                  <DropdownMenuTrigger asChild>
                                     <button className="p-1 rounded-sm hover:bg-muted flex items-center justify-center">

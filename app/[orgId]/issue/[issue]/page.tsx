@@ -1,6 +1,5 @@
 'use client';
 
-import { IssuesHeader } from '@/components/layout/headers/issues/header';
 import MainLayout from '@/components/layout/main-layout';
 import { useAccount } from 'jazz-react';
 import { useParams } from 'next/navigation';
@@ -25,7 +24,7 @@ export default function IssuePage() {
    const organization = me?.root?.organizations?.find((org) => org?.slug === orgId) ?? undefined;
 
    return (
-      <MainLayout header={<IssuesHeader organization={organization} />}>
+      <MainLayout header={<></>}>
          {organization ? (
             <IssueDetail
                organization={organization}
