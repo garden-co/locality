@@ -1,7 +1,7 @@
 'use client';
 
 import { Toaster } from '@/components/ui/sonner';
-import { JazzProvider, PasskeyAuthBasicUI } from 'jazz-react';
+import { JazzProvider } from 'jazz-react';
 
 import { ThemeProvider } from '@/components/layout/theme-provider';
 import { JazzAccount } from '@/lib/jazz-schema';
@@ -26,7 +26,7 @@ export function AppProviders({
             }}
             AccountSchema={JazzAccount}
          >
-            <PasskeyAuthBasicUI appName="Jazz Reactions Example">{children}</PasskeyAuthBasicUI>
+            {children}
          </JazzProvider>
          <Toaster />
       </ThemeProvider>

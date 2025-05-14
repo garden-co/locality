@@ -278,7 +278,7 @@ export class JazzAccount extends Account {
 
    async migrate(creationProps?: { name: string; email: string; other?: Record<string, unknown> }) {
       if (!this._refs.root && creationProps) {
-         await this.initialMigration(creationProps);
+         await this.initialMigration(this, creationProps);
          return;
       }
 
@@ -289,7 +289,7 @@ export class JazzAccount extends Account {
       // }
    }
 
-   private async initialMigration(creationProps: {
+   private async initialMigration(me: JazzAccount, creationProps: {
       name: string;
       email: string;
       other?: Record<string, unknown>;
@@ -300,142 +300,175 @@ export class JazzAccount extends Account {
       //    throw new Error(`Invalid profile data: ${profileErrors.errors.join(', ')}`);
       // }
 
-      const publicProfileGroup = Group.create({ owner: this });
+      const publicProfileGroup = Group.create(me);
       publicProfileGroup.addMember('everyone', 'reader');
 
-      this.profile = UserProfile.create({ name, email }, { owner: publicProfileGroup });
-
-      const privateOrgGroup = Group.create({ owner: this });
-      const privateTeamGroup = Group.create({ owner: this });
-      privateTeamGroup.extend(privateOrgGroup);
-
-      // Create default team first without issues
-      const defaultTeam = Team.create(
-         {
-            name: 'Dev',
-            slug: generateSlug('Dev'),
-            icon: '👥',
-            color: '#0ea5e9',
-            issues: IssueList.create([], { owner: privateTeamGroup }),
-         },
-         { owner: privateTeamGroup }
-      );
-
-      // Create issues with team reference
-      const defaultIssue = Issue.create(
-         {
-            identifier: 'JAZZ-1',
-            title: 'My Issue',
-            description: 'My Issue Description',
-            priority: 'medium',
-            statusType: 'in-progress',
-            assignee: this.profile,
-            team: defaultTeam,
-         },
-         { owner: privateTeamGroup }
-      );
-
-      const defaultComment = Comment.create(
-         {
-            content: 'This is a default comment',
-            parentIssue: defaultIssue,
-            reactions: ReactionsList.create([], { owner: privateTeamGroup }),
-            attachments: AttachmentList.create([], { owner: privateTeamGroup }),
-         },
-         { owner: privateTeamGroup }
-      );
-
-      defaultIssue.comments = CommentList.create([defaultComment], { owner: privateTeamGroup });
-
-      const defaultSubissue = Issue.create(
-         {
-            identifier: 'JAZZ-1-1',
-            title: 'My Subissue',
-            description: 'My Subissue Description',
-            priority: 'low',
-            statusType: 'to-do',
-            assignee: this.profile,
-            parentIssue: defaultIssue,
-            team: defaultTeam,
-         },
-         { owner: privateTeamGroup }
-      );
-
-      defaultIssue.childIssues = IssueList.create([defaultSubissue], { owner: privateTeamGroup });
-
-      // Add issues to the team
-      defaultTeam.issues = IssueList.create([defaultIssue, defaultSubissue], {
-         owner: privateTeamGroup,
-      });
-
-      const defaultLabel_bug = Label.create(
-         {
-            name: 'Bug',
-            color: '#f97316',
-         },
-         { owner: privateTeamGroup }
-      );
-
-      const defaultLabel_feature = Label.create(
-         {
-            name: 'Feature',
-            color: '#0ea5e9',
-         },
-         { owner: privateTeamGroup }
-      );
-
-      const defaultLabel_documentation = Label.create(
-         {
-            name: 'Documentation',
-            color: '#8b5cf6',
-         },
-         { owner: privateTeamGroup }
-      );
-
-      const defaultLabel_question = Label.create(
-         {
-            name: 'Question',
-            color: '#ec4899',
-         },
-         { owner: privateTeamGroup }
-      );
+      this.profile = UserProfile.create({ name, email }, publicProfileGroup);
 
       const randomCode = generateRandomCode();
 
-      const defaultOrganization = Organization.create(
-         {
-            name: `Jazz-${randomCode}`,
-            slug: `jazz-${randomCode}`,
-            teams: TeamList.create([defaultTeam], { owner: privateOrgGroup }),
-            labels: LabelList.create(
-               [
-                  defaultLabel_bug,
-                  defaultLabel_feature,
-                  defaultLabel_documentation,
-                  defaultLabel_question,
-               ],
-               {
-                  owner: privateTeamGroup,
-               }
-            ),
-            liveUpdates: LiveUpdates.create([], { owner: privateTeamGroup }),
-         },
-         { owner: privateOrgGroup }
-      );
-
-      // Set organization reference on issues
-      defaultIssue.parentOrganization = defaultOrganization;
-      defaultSubissue.parentOrganization = defaultOrganization;
+      const defaultOrganization = createNewOrganization(me, {
+         teamName: 'Dev',
+         orgName: `Jazz-${randomCode}`,
+         orgSlug: `jazz-${randomCode}`,
+      });
 
       // Initialize root structure with version
       this.root = AccountRoot.create(
          {
-            organizations: OrganizationList.create([defaultOrganization], {
-               owner: privateOrgGroup,
-            }),
+            organizations: OrganizationList.create([defaultOrganization], Group.create(me)),
             version: 0, // Set initial version
          },
-         { owner: this }
+         Group.create(me)
       );
    }
+}
+
+export function createNewTeam(me: JazzAccount, props: {
+   teamName: string;
+   organizationGroup: Group;
+   icon?: string;
+   color?: string;
+}) {
+   const privateTeamGroup = Group.create(me);
+   privateTeamGroup.extend(props.organizationGroup);
+
+   // Create default team first without issues
+   const newTeam = Team.create(
+      {
+         name: props.teamName,
+         slug: generateSlug(props.teamName),
+         icon: props.icon || '👥',
+         color: props.color || '#0ea5e9',
+         issues: IssueList.create([], privateTeamGroup),
+      },
+      privateTeamGroup
+   );
+
+   // Create issues with team reference
+   const defaultIssue = Issue.create(
+      {
+         identifier: 'JAZZ-1',
+         title: 'My Issue',
+         description: 'My Issue Description',
+         priority: 'medium',
+         statusType: 'in-progress',
+         assignee: me.profile,
+         team: newTeam,
+      },
+      privateTeamGroup
+   );
+
+   const defaultComment = Comment.create(
+      {
+         content: 'This is a default comment',
+         parentIssue: defaultIssue,
+         reactions: ReactionsList.create([], privateTeamGroup),
+         attachments: AttachmentList.create([], privateTeamGroup),
+      },
+      privateTeamGroup
+   );
+
+   defaultIssue.comments = CommentList.create([defaultComment], privateTeamGroup);
+
+   const defaultSubissue = Issue.create(
+      {
+         identifier: 'JAZZ-1-1',
+         title: 'My Subissue',
+         description: 'My Subissue Description',
+         priority: 'low',
+         statusType: 'to-do',
+         assignee: me.profile,
+         parentIssue: defaultIssue,
+         team: newTeam,
+      },
+      privateTeamGroup
+   );
+
+   defaultIssue.childIssues = IssueList.create([defaultSubissue], privateTeamGroup);
+
+   // Add issues to the team
+   newTeam.issues = IssueList.create([defaultIssue, defaultSubissue], {
+      owner: privateTeamGroup,
+   });
+
+   return {
+      team: newTeam,
+      defaultIssue,
+      defaultSubissue,
+   };
+}
+
+export function createNewOrganization(me: JazzAccount, props: {
+   teamName: string;
+   orgName: string;
+   orgSlug: string;
+}) {
+   const privateOrgGroup = Group.create(me);
+
+   const { team: defaultTeam, defaultIssue, defaultSubissue } = createNewTeam(me, {
+      teamName: props.teamName,
+      organizationGroup: privateOrgGroup,
+   });
+
+   const privateTeamGroup = defaultTeam._owner.castAs(Group);
+
+   const defaultLabel_bug = Label.create(
+      {
+         name: 'Bug',
+         color: '#f97316',
+      },
+      privateTeamGroup
+   );
+
+   const defaultLabel_feature = Label.create(
+      {
+         name: 'Feature',
+         color: '#0ea5e9',
+      },
+      privateTeamGroup
+   );
+
+   const defaultLabel_documentation = Label.create(
+      {
+         name: 'Documentation',
+         color: '#8b5cf6',
+      },
+      privateTeamGroup
+   );
+
+   const defaultLabel_question = Label.create(
+      {
+         name: 'Question',
+         color: '#ec4899',
+      },
+      privateTeamGroup
+   );
+
+   const newOrganization = Organization.create(
+      {
+         name: props.orgName,
+         slug: props.orgSlug,
+         teams: TeamList.create([defaultTeam], privateTeamGroup),
+         labels: LabelList.create(
+            [
+               defaultLabel_bug,
+               defaultLabel_feature,
+               defaultLabel_documentation,
+               defaultLabel_question,
+            ],
+            {
+               owner: privateTeamGroup,
+            }
+         ),
+         liveUpdates: LiveUpdates.create([], privateTeamGroup),
+      },
+      privateOrgGroup
+   );
+
+   // Set organization reference on issues
+   defaultIssue.parentOrganization = newOrganization;
+   defaultSubissue.parentOrganization = newOrganization;
+
+   return newOrganization;
 }

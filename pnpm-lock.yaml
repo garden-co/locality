@@ -93,11 +93,11 @@ importers:
         specifier: ^0.3.7
         version: 0.3.7
       jazz-react:
-        specifier: ^0.13
-        version: 0.13.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: ^0.13.26
+        version: 0.13.26(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       jazz-tools:
-        specifier: ^0.13
-        version: 0.13.5
+        specifier: ^0.13.26
+        version: 0.13.26
       lucide-react:
         specifier: ^0.476.0
         version: 0.476.0(react@19.0.0)
@@ -430,12 +430,12 @@ packages:
   '@noble/ciphers@0.1.4':
     resolution: {integrity: sha512-d3ZR8vGSpy3v/nllS+bD/OMN5UZqusWiQqkyj7AwzTnhXFH72pF5oB4Ach6DQ50g5kXxC28LdaYBEpsyv9KOUQ==}
 
-  '@noble/curves@1.8.1':
-    resolution: {integrity: sha512-warwspo+UYUPep0Q+vtdVB4Ugn8GGQj8iyB3gnRWsztmUHTI3S1nhdiWNsPUGL0vud7JlRRk1XEu7Lq1KGTnMQ==}
+  '@noble/curves@1.9.0':
+    resolution: {integrity: sha512-7YDlXiNMdO1YZeH6t/kvopHHbIZzlxrCV9WLqCY6QhcXOoXiNCMDqJIglZ9Yjx5+w7Dz30TITFrlTjnRg7sKEg==}
     engines: {node: ^14.21.3 || >=16}
 
-  '@noble/hashes@1.7.1':
-    resolution: {integrity: sha512-B8XBPsn4vT/KJAGqDzbwztd+6Yte3P4V7iafm24bxgDe/mlRuK6xmWPuCNrKt2vDafZ8MfJLlchDG/vYafQEjQ==}
+  '@noble/hashes@1.8.0':
+    resolution: {integrity: sha512-jCs9ldd7NwzpgXDIf6P3+NrHh9/sD6CQdxHyjQI+h/6rDNo88ypBxxz45UDuZHz9r3tNz7N/VInSVoVdtXEI4A==}
     engines: {node: ^14.21.3 || >=16}
 
   '@nodelib/fs.scandir@2.1.5':
@@ -1108,11 +1108,11 @@ packages:
   '@scure/base@1.2.1':
     resolution: {integrity: sha512-DGmGtC8Tt63J5GfHgfl5CuAXh96VF/LD8K9Hr/Gv0J2lAoRGlPOMpqMpMbCTOoOJMZCk2Xt+DskdDyn6dEFdzQ==}
 
-  '@scure/base@1.2.4':
-    resolution: {integrity: sha512-5Yy9czTO47mqz+/J8GM6GIId4umdCk1wc1q8rKERQulIoc8VP9pzDcghv10Tl2E7R96ZUx/PhND3ESYUQX8NuQ==}
+  '@scure/base@1.2.5':
+    resolution: {integrity: sha512-9rE6EOVeIQzt5TSu4v+K523F8u6DhBsoZWPGKlnCshhlDhy0kJzUX4V+tr2dWmzF1GdekvThABoEQBGBQI7xZw==}
 
-  '@scure/bip39@1.5.4':
-    resolution: {integrity: sha512-TFM4ni0vKvCfBpohoh+/lY05i9gRbSwXWngAsF4CABQxoaOHijxuaZ2R6cStDQ5CHtHO9aGJTr4ksVJASRRyMA==}
+  '@scure/bip39@1.6.0':
+    resolution: {integrity: sha512-+lF0BbLiJNwVlev4eKelw1WWLaiKXw7sSl8T6FvBlWkdX+94aGJ4o8XjUdlyhTCjd8c+B3KT3JfS8P0bLRNU6A==}
 
   '@standard-schema/utils@0.3.0':
     resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==}
@@ -1580,17 +1580,17 @@ packages:
       react: ^18.0.0
       react-dom: ^18.0.0
 
-  cojson-storage-indexeddb@0.13.5:
-    resolution: {integrity: sha512-0KmgFlX6KVFeI5bCleV3T/USWbSq/hxDmdNyifbcQH8OmdLAIOm3mZds0WfQDEnzFiZMaRGlcHnSWcLEuIiRuA==}
+  cojson-storage-indexeddb@0.13.25:
+    resolution: {integrity: sha512-VGFzvTgjM5VAA3LTffEYJwKAfHKHZKUIzU4/aUhCf11aO7Tm3uk7Wtz6aqKkFDZguhR9nZd2Jwpi0oZqfoV03Q==}
 
-  cojson-storage@0.13.5:
-    resolution: {integrity: sha512-FnczWlAJ9566DpegD934n8EiQObW+io8rL2iNFHFEgLU8mwrcmyJ+eWdSb7p0Z9PhWLylF0W/CgD2dI+OUO5jQ==}
+  cojson-storage@0.13.25:
+    resolution: {integrity: sha512-t6Is+IyPJHVdFUshBFtzFmyFqBoIzHIsOkmr7LuI5Nx4PtQaW3wEgJ6cyWc2vOnFKp5EbW0RASLFwBDs6cCroA==}
 
-  cojson-transport-ws@0.13.5:
-    resolution: {integrity: sha512-79Sv1DKJFcosYXge5GgV+0pFRxudNRkexGPnmYPSNueOTefOx9w4fnsmxF4wBsHvckoW1y+ISebCBsWu3whuJQ==}
+  cojson-transport-ws@0.13.25:
+    resolution: {integrity: sha512-/EeL6Hsq/hBwepXeOEJeWgp/STEnO81AoIcZxPnuSIaEIsgq8OH/VvZ82jgS06WQnljZg2Zl5XkCNsSTf56S1A==}
 
-  cojson@0.13.5:
-    resolution: {integrity: sha512-iNg0mWdqerk5sYMELLl9M/2temidTFEL/IY8WrWyxImZn1UcchzuCgWMmIPag3iSzKDOOkdbuK/JsAMU/kouAQ==}
+  cojson@0.13.25:
+    resolution: {integrity: sha512-HrAF6I8Qd2w2PEESNuF0AM5GEHUKUDudkITJZTnbDs1FbAXB5ShnvLkwXn7BJwRkULa1yub+h/AXc5minXpHxw==}
 
   color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
@@ -2212,29 +2212,29 @@ packages:
     resolution: {integrity: sha512-H0dkQoCa3b2VEeKQBOxFph+JAbcrQdE7KC0UkqwpLmv2EC4P41QXP+rqo9wYodACiG5/WM5s9oDApTU8utwj9g==}
     engines: {node: '>= 0.4'}
 
-  jazz-browser-media-images@0.13.5:
-    resolution: {integrity: sha512-s8mLQnPgFNfuoIlJi/qG7hGPlVTVZ8kqz/sPCqQXh6nYk8b6U/xgp4yepSrwj3O5MNm6D5nt/JnfU5kOj7quDQ==}
+  jazz-browser-media-images@0.13.26:
+    resolution: {integrity: sha512-xYdg/xlNmVNIA7mpsxi3YA9/JpOofjxwCEeVTWhwDNuy1wxflyMmxSuc8+JI9XBVAAsJQKDWZOJpqiINwg1uTw==}
 
-  jazz-browser@0.13.5:
-    resolution: {integrity: sha512-G2I06MNE1wzVzQ5ImsJCJVBTp/4hEkxRUw5IKiqDVRf6dw3KfEIf7uDcKlVSqPDesn4b3t5X0Y6GgmjSHZ0jdw==}
+  jazz-browser@0.13.26:
+    resolution: {integrity: sha512-YfePyWoTNjHiwUtxLdoR2bVuiA06on6w1x8fnF5Ww4CPClE03Zm5BvQVcikqTiQ5z/0yO+asch3nky5CWzXz6A==}
 
   jazz-crypto-rs@0.0.7:
     resolution: {integrity: sha512-Pzs8Zu1zgKVURkBVvqqF1B2r78FaSZdwPbmeCWx0Nb3nibzPuB/kSKEO7LJsKnb3P5HO0v+lTIJ53mGC5H1urQ==}
 
-  jazz-react-core@0.13.5:
-    resolution: {integrity: sha512-2CnDx4d9O62h0MiItQquHYWHdWSdBtHKjSvc/mc2yuVDst6ySKAQRAfpAbPueJmHmxFU1WMoPpzMK85RFWjy3Q==}
+  jazz-react-core@0.13.26:
+    resolution: {integrity: sha512-X23RdQCtwIYdrU6pX/qaU0iFeszVjG51ZznPXlMkePWC1U/gBCb+iC0Crya5Us+06hySXl1VQ1O6WHaUQFO0cA==}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  jazz-react@0.13.5:
-    resolution: {integrity: sha512-E6GblFucT8d6DHiz3fkfSzwi7y8gGgIxdUUG1B54Sqkw7IC+YjoUN3p5Sa/nCWtH5Ckksv5fSsozG/HTydlDbg==}
+  jazz-react@0.13.26:
+    resolution: {integrity: sha512-0LAoaEQgX4b8IqWrOusEGLMsSF7//7kUGd7xYT5bfn8/kz6NInqr1d4saauL/bGcfQfZiojhREPNM6G/Y6rt5w==}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  jazz-tools@0.13.5:
-    resolution: {integrity: sha512-wVMXbdnvGlJZlysb5vAN3EYTXdGev0irOrxl6f/4R6acEg8QZ8l/bom0peCqbQN/azTLWqApgEzbfcxMaC1L7A==}
+  jazz-tools@0.13.26:
+    resolution: {integrity: sha512-BwoSHVgrFKCRRzDEPhDjIFBuT+NDMTcMKubS4up9R/PjqlephREafKVeVI/r0NZmS6dyfRQ+xSgC18Y3WmRhfw==}
 
   jiti@2.4.2:
     resolution: {integrity: sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A==}
@@ -3019,11 +3019,6 @@ packages:
     resolution: {integrity: sha512-3KS2b+kL7fsuk/eJZ7EQdnEmQoaho/r6KUef7hxvltNA5DR8NAUM+8wJMbJyZ4G9/7i3v5zPBIMN5aybAh2/Jg==}
     engines: {node: '>= 0.4'}
 
-  typescript@5.6.3:
-    resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-
   typescript@5.7.3:
     resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
     engines: {node: '>=14.17'}
@@ -3329,11 +3324,11 @@ snapshots:
 
   '@noble/ciphers@0.1.4': {}
 
-  '@noble/curves@1.8.1':
+  '@noble/curves@1.9.0':
     dependencies:
-      '@noble/hashes': 1.7.1
+      '@noble/hashes': 1.8.0
 
-  '@noble/hashes@1.7.1': {}
+  '@noble/hashes@1.8.0': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -3989,12 +3984,12 @@ snapshots:
 
   '@scure/base@1.2.1': {}
 
-  '@scure/base@1.2.4': {}
+  '@scure/base@1.2.5': {}
 
-  '@scure/bip39@1.5.4':
+  '@scure/bip39@1.6.0':
     dependencies:
-      '@noble/hashes': 1.7.1
-      '@scure/base': 1.2.4
+      '@noble/hashes': 1.8.0
+      '@scure/base': 1.2.5
 
   '@standard-schema/utils@0.3.0': {}
 
@@ -4520,25 +4515,24 @@ snapshots:
       - '@types/react'
       - '@types/react-dom'
 
-  cojson-storage-indexeddb@0.13.5:
+  cojson-storage-indexeddb@0.13.25:
     dependencies:
-      cojson: 0.13.5
-      cojson-storage: 0.13.5
+      cojson: 0.13.25
+      cojson-storage: 0.13.25
 
-  cojson-storage@0.13.5:
+  cojson-storage@0.13.25:
     dependencies:
-      cojson: 0.13.5
+      cojson: 0.13.25
 
-  cojson-transport-ws@0.13.5:
+  cojson-transport-ws@0.13.25:
     dependencies:
-      cojson: 0.13.5
-      typescript: 5.6.3
+      cojson: 0.13.25
 
-  cojson@0.13.5:
+  cojson@0.13.25:
     dependencies:
       '@noble/ciphers': 0.1.4
-      '@noble/curves': 1.8.1
-      '@noble/hashes': 1.7.1
+      '@noble/curves': 1.9.0
+      '@noble/hashes': 1.8.0
       '@opentelemetry/api': 1.9.0
       '@scure/base': 1.2.1
       jazz-crypto-rs: 0.0.7
@@ -5295,46 +5289,45 @@ snapshots:
       has-symbols: 1.1.0
       set-function-name: 2.0.2
 
-  jazz-browser-media-images@0.13.5:
+  jazz-browser-media-images@0.13.26:
     dependencies:
       '@types/image-blob-reduce': 4.1.4
       image-blob-reduce: 4.1.0
-      jazz-browser: 0.13.5
-      jazz-tools: 0.13.5
+      jazz-browser: 0.13.26
+      jazz-tools: 0.13.26
       pica: 9.0.1
-      typescript: 5.6.3
 
-  jazz-browser@0.13.5:
+  jazz-browser@0.13.26:
     dependencies:
-      cojson: 0.13.5
-      cojson-storage-indexeddb: 0.13.5
-      cojson-transport-ws: 0.13.5
-      jazz-tools: 0.13.5
+      cojson: 0.13.25
+      cojson-storage-indexeddb: 0.13.25
+      cojson-transport-ws: 0.13.25
+      jazz-tools: 0.13.26
 
   jazz-crypto-rs@0.0.7: {}
 
-  jazz-react-core@0.13.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  jazz-react-core@0.13.26(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
-      cojson: 0.13.5
-      jazz-tools: 0.13.5
+      cojson: 0.13.25
+      jazz-tools: 0.13.26
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
-  jazz-react@0.13.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  jazz-react@0.13.26(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
-      '@scure/bip39': 1.5.4
-      cojson: 0.13.5
-      jazz-browser: 0.13.5
-      jazz-browser-media-images: 0.13.5
-      jazz-react-core: 0.13.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      jazz-tools: 0.13.5
+      '@scure/bip39': 1.6.0
+      cojson: 0.13.25
+      jazz-browser: 0.13.26
+      jazz-browser-media-images: 0.13.26
+      jazz-react-core: 0.13.26(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      jazz-tools: 0.13.26
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
-  jazz-tools@0.13.5:
+  jazz-tools@0.13.26:
     dependencies:
-      '@scure/bip39': 1.5.4
-      cojson: 0.13.5
+      '@scure/bip39': 1.6.0
+      cojson: 0.13.25
       fast-myers-diff: 3.2.0
 
   jiti@2.4.2: {}
@@ -6215,8 +6208,6 @@ snapshots:
       is-typed-array: 1.1.15
       possible-typed-array-names: 1.1.0
       reflect.getprototypeof: 1.0.10
-
-  typescript@5.6.3: {}
 
   typescript@5.7.3: {}
 

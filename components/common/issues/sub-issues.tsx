@@ -278,11 +278,11 @@ export function SubIssues({ parentIssue }: SubIssuesProps) {
                               };
 
                               // Create the new sub-issue
-                              const createdSubIssue = Issue.create(newSubIssue);
+                              const createdSubIssue = Issue.create(newSubIssue, parentIssue._owner);
 
                               // Initialize childIssues if it doesn't exist
                               if (!parentIssue.childIssues) {
-                                 parentIssue.childIssues = IssueList.create([]);
+                                 parentIssue.childIssues = IssueList.create([], parentIssue._owner);
                               }
 
                               // Add to parent's sub-issues list
@@ -298,9 +298,6 @@ export function SubIssues({ parentIssue }: SubIssuesProps) {
                                     issueTeam.issues.push(createdSubIssue);
                                  }
                               }
-
-                              console.log('parentIssue', parentIssue);
-                              console.log('parentIssue?.childIssues', parentIssue?.childIssues);
 
                               // Reset form
                               setShowSubIssueEditor(false);

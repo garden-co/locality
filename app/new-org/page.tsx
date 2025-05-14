@@ -7,13 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAccount } from 'jazz-react';
 import {
-   Issue,
-   IssueList,
-   Organization,
-   Team,
-   TeamList,
-   LabelList,
-   LiveUpdates,
+   createNewOrganization,
 } from '@/lib/jazz-schema';
 
 import { Button } from '@/components/ui/button';
@@ -26,7 +20,7 @@ import {
    FormLabel,
    FormMessage,
 } from '@/components/ui/form';
-import { generateSlug, getThreeLettersFromString } from '@/lib/utils';
+import { generateSlug } from '@/lib/utils';
 
 const formSchema = z.object({
    workspaceName: z.string().min(2, {
@@ -70,38 +64,11 @@ export default function NewOrgPage() {
             return;
          }
 
-         const identifier = getThreeLettersFromString(values.workspaceName.trim());
-
-         const newTeam = Team.create({
-            name: values.workspaceName.trim(),
-            slug: orgSlug,
-            icon: '👥',
-            color: '#0ea5e9',
-            issues: IssueList.create([]),
+         const newOrganization = createNewOrganization(me, {
+            teamName: values.workspaceName.trim(),
+            orgName: values.workspaceName.trim(),
+            orgSlug: orgSlug,
          });
-
-         const newIssue = Issue.create({
-            identifier: `${identifier}-1`,
-            title: 'My Issue',
-            description: 'My Issue Description',
-            priority: 'no-priority',
-            statusType: 'in-progress',
-            team: newTeam,
-         });
-
-         newTeam.issues!.push(newIssue);
-
-         // Create new Organization
-         const newOrganization = Organization.create({
-            name: values.workspaceName.trim(),
-            slug: orgSlug,
-            teams: TeamList.create([newTeam]),
-            labels: LabelList.create([]),
-            liveUpdates: LiveUpdates.create([]),
-         });
-
-         // Set organization reference on the issue
-         newIssue.parentOrganization = newOrganization;
 
          // Add to organizations list
          organizations?.push(newOrganization);
