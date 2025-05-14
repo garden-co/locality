@@ -7,27 +7,20 @@ classDiagram
     
     %% Organization structure
     Organization --> TeamList : contains
-    Organization --> ProjectList : contains
     Organization --> LabelList : contains
     Organization --> LiveUpdates : contains
+    Organization --> Issue : referenced by
     
     %% Teams and issues
     TeamList --> Team : contains
-    Team --> CycleList : contains
     Team --> IssueList : contains
-    
-    %% Project structure
-    ProjectList --> Project : contains
-    Project --> IssueList : references
     
     %% Issues and related items
     IssueList --> Issue : contains
     Issue --> Issue : parentIssue
     Issue --> IssueList : childIssues
     Issue --> Team : belongs to
-    Issue --> Project : belongs to
     Issue --> UserProfile : assignee
-    Issue --> Cycle : belongs to
     Issue --> LabelList : has
     Issue --> CommentList : has
     Issue --> AttachmentList : has
@@ -43,11 +36,13 @@ classDiagram
     %% Supporting entities
     AttachmentList --> Attachment : contains
     LabelList --> Label : contains
+    ReactionsList --> ReactionType : contains
     
     %% Class properties
     class JazzAccount {
         profile: UserProfile
         root: AccountRoot
+        migrate()
     }
     
     class AccountRoot {
@@ -59,10 +54,10 @@ classDiagram
         name: string
         slug: string
         teams: TeamList
-        projects: ProjectList
         labels: LabelList
         liveUpdates: LiveUpdates
         deleted: boolean
+        getTeamsForMember()
     }
     
     class Team {
@@ -70,21 +65,7 @@ classDiagram
         slug: string
         icon: string
         color: string
-        cycles: CycleList
         issues: IssueList
-        deleted: boolean
-    }
-    
-    class Project {
-        name: string
-        slug: string
-        description: string
-        status: string
-        icon: string
-        percentComplete: number
-        startDate: Date
-        endDate: Date
-        issuesRef: IssueList
         deleted: boolean
     }
     
@@ -95,10 +76,8 @@ classDiagram
         assignee: UserProfile
         estimate: number
         dueDate: Date
-        statusType: string
-        priority: string
-        cycle: Cycle
-        project: Project
+        statusType: StatusType
+        priority: PriorityType
         team: Team
         parentIssue: Issue
         childIssues: IssueList
@@ -107,23 +86,18 @@ classDiagram
         comments: CommentList
         reactions: ReactionsList
         deleted: boolean
+        parentOrganization: Organization
+        updateIssueStatus()
+        updateIssuePriority()
+        updateIssueAssignee()
+        addIssueLabel()
+        removeIssueLabel()
     }
     
     class UserProfile {
         name: string
         email: string
         avatarUrl: string
-        status: string
-    }
-    
-    class Cycle {
-        number: number
-        name: string
-        startDate: Date
-        endDate: Date
-        progress: number
-        active: boolean
-        issuesRef: IssueList
     }
     
     class Comment {
@@ -144,6 +118,32 @@ classDiagram
     class Attachment {
         name: string
         file: FileStream
+        image: ImageDefinition
         type: string
         deleted: boolean
+    }
+    
+    class IssueList {
+        filterByStatus()
+        filterByPriority()
+        filterByAssignee()
+        filterByLabel()
+        searchIssues()
+        filterIssues()
+        groupIssuesByStatus()
+    }
+    
+    class ReactionsList {
+    }
+    
+    class ReactionType {
+        thumb-up|thumb-down|laugh|heart|sad|angry|surprised|thinking|wink|clap|fire|fireworks|party
+    }
+    
+    class StatusType {
+        backlog|to-do|in-progress|technical-review|completed|paused|archived
+    }
+    
+    class PriorityType {
+        no-priority|low|medium|high|urgent
     }
