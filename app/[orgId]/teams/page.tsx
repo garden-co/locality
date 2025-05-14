@@ -2,7 +2,6 @@
 
 import { TeamsHeader } from '@/components/layout/headers/teams/header';
 import MainLayout from '@/components/layout/main-layout';
-import { ViewMode } from '@/components/layout/headers/teams/header-options';
 import { useAccount } from 'jazz-react';
 import { useParams } from 'next/navigation';
 import { useState, useCallback } from 'react';
@@ -11,7 +10,6 @@ import TeamsListContainer from '@/components/common/teams/teams-list-container';
 export default function TeamsPage() {
    const params = useParams();
    const orgId = params.orgId as string;
-   const [viewMode, setViewMode] = useState<ViewMode>('all');
    const [searchQuery, setSearchQuery] = useState('');
 
    // Use useAccount ONCE to shallowly load organizations at the page level
@@ -32,15 +30,10 @@ export default function TeamsPage() {
    }, []);
 
    return (
-      <MainLayout
-         header={
-            <TeamsHeader viewMode={viewMode} setViewMode={setViewMode} onSearch={handleSearch} />
-         }
-      >
+      <MainLayout header={<TeamsHeader onSearch={handleSearch} />}>
          {organization ? (
             <TeamsListContainer
                organization={organization}
-               viewMode={viewMode}
                searchQuery={searchQuery}
                currentUserId={me?.id}
             />

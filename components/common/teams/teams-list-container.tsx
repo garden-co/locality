@@ -2,7 +2,6 @@
 
 import { useCoState } from 'jazz-react';
 import { Organization, TeamList } from '@/lib/jazz-schema';
-import { ViewMode } from '@/components/layout/headers/teams/header-options';
 import Teams from '@/components/common/teams/teams';
 import { useMemo } from 'react';
 import { Group } from 'jazz-tools';
@@ -10,14 +9,12 @@ import { getThreeLettersFromString } from '@/lib/utils';
 
 interface TeamsListContainerProps {
    organization: Organization;
-   viewMode: ViewMode;
    searchQuery: string;
    currentUserId?: string;
 }
 
 export default function TeamsListContainer({
    organization,
-   viewMode,
    searchQuery,
    currentUserId,
 }: TeamsListContainerProps) {
@@ -54,24 +51,10 @@ export default function TeamsListContainer({
             teamSlug.includes(searchLower) ||
             teamIdentifier.includes(searchLower);
 
-         // View mode filter
-         let matchesViewMode = false;
-         switch (viewMode) {
-            case 'joined':
-               matchesViewMode = !!isUserMember;
-               break;
-            case 'not-joined':
-               matchesViewMode = !isUserMember;
-               break;
-            case 'all':
-            default:
-               matchesViewMode = true;
-         }
-
          // Both filters must pass
-         return matchesSearch && matchesViewMode;
+         return matchesSearch && isUserMember;
       }) as TeamList;
-   }, [orgWithData, viewMode, searchQuery, currentUserId]);
+   }, [orgWithData, searchQuery, currentUserId]);
 
    // Handle loading states
    if (orgWithData === undefined)
