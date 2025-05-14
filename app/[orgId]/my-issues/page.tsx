@@ -21,12 +21,10 @@ export default function MyIssuesPage() {
    });
 
    // Find the organization by slug
-   const organization = me?.root?.organizations?.find((org) => org?.slug === orgId);
-
-   console.log('organization', organization);
+   const organization = me?.root?.organizations?.find((org) => org?.slug === orgId) ?? undefined;
 
    return (
-      <MainLayout header={<IssuesHeader />}>
+      <MainLayout header={<IssuesHeader organization={organization} />}>
          {organization && me?.profile ? (
             <MyIssuesList organization={organization} profile={me.profile} />
          ) : (

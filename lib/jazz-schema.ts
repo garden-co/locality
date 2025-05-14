@@ -163,7 +163,9 @@ export function groupIssuesByStatus(issues: Issue[] | IssueList): Record<string,
 
 export function searchIssues(issues: Issue[] | IssueList, query: string) {
    return issues.filter(
-      (issue) => issue?.title?.includes(query) || issue?.description?.includes(query)
+      (issue) =>
+         issue?.title?.toLowerCase().includes(query.toLowerCase()) ||
+         issue?.description?.toLowerCase().includes(query.toLowerCase())
    );
 }
 

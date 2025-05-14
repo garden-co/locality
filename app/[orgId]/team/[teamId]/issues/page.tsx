@@ -21,10 +21,10 @@ export default function TeamIssuesPage() {
    });
 
    // Find the organization by slug
-   const organization = me?.root?.organizations?.find((org) => org?.slug === orgId) || undefined;
+   const organization = me?.root?.organizations?.find((org) => org?.slug === orgId) ?? undefined;
 
    return (
-      <MainLayout header={<IssuesHeader />}>
+      <MainLayout header={<IssuesHeader organization={organization} />}>
          {organization ? (
             <TeamIssuesList organization={organization} teamId={teamId} />
          ) : (

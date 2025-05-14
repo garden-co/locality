@@ -10,18 +10,77 @@ import {
 import { cn } from '@/lib/utils';
 import { useViewStore, ViewType } from '@/store/view-store';
 import { LayoutGrid, LayoutList, SlidersHorizontal } from 'lucide-react';
-// import { Filter } from './filter';
+import { Filter } from './filter';
+import { Organization, UserProfile } from '@/lib/jazz-schema';
+import { useCoState } from 'jazz-react';
+import { useMemo } from 'react';
+import { useSearchStore } from '@/store/search-store';
 
-export default function HeaderOptions() {
+export default function HeaderOptions({
+   organization,
+}: {
+   organization: Organization | undefined;
+}) {
    const { viewType, setViewType } = useViewStore();
+   const { openFilter, closeFilter } = useSearchStore();
 
    const handleViewChange = (type: ViewType) => {
       setViewType(type);
    };
 
+   // Load organization with teams and their issues to get all assignees
+   const orgWithTeams = useCoState(Organization, organization?.id, {
+      resolve: {
+         teams: {
+            $each: {
+               issues: {
+                  $each: {
+                     assignee: true,
+                  },
+               },
+            },
+         },
+      },
+   });
+
+   // Get users and labels from organization for filter selectors
+   const issueOwnerUsers = useMemo(() => {
+      if (!orgWithTeams || !orgWithTeams.teams) return [];
+
+      // Collect all unique assignee profiles from all issues
+      const profiles: UserProfile[] = [];
+      const profileIds = new Set<string>();
+
+      orgWithTeams.teams.forEach((team) => {
+         if (team?.issues) {
+            team.issues.forEach((issue) => {
+               if (issue?.assignee && !profileIds.has(issue.assignee.id)) {
+                  profileIds.add(issue.assignee.id);
+                  profiles.push(issue.assignee);
+               }
+            });
+         }
+      });
+
+      return profiles;
+   }, [orgWithTeams]);
+
+   const handleFilterOpenChange = (open: boolean) => {
+      // Directly control the filter state based on the requested state
+      if (open) {
+         openFilter();
+      } else {
+         closeFilter();
+      }
+   };
+
    return (
       <div className="w-full flex justify-between items-center border-b py-1.5 px-6 h-10">
-         {/* <Filter /> */}
+         <Filter
+            users={issueOwnerUsers}
+            labels={organization?.labels || undefined}
+            onOpenChange={handleFilterOpenChange}
+         />
          <DropdownMenu>
             <DropdownMenuTrigger asChild>
                <Button className="relative" size="xs" variant="secondary">

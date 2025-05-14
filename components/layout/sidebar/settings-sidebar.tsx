@@ -49,6 +49,8 @@ export function SettingsSidebar({ ...props }: React.ComponentProps<typeof Sideba
                      {team.icon}
                   </span>
                ),
+               color: team.color,
+               deleted: team.deleted,
                href: `/${orgId}/settings/teams/${team.slug}`,
             };
          })
@@ -102,20 +104,31 @@ export function SettingsSidebar({ ...props }: React.ComponentProps<typeof Sideba
                      Your teams
                   </h3>
                   <div className="space-y-1">
-                     {teamItems.map((item) => (
-                        <Button
-                           key={item?.label}
-                           variant={pathname.includes(item?.href || '') ? 'secondary' : 'ghost'}
-                           size="sm"
-                           className="w-full justify-start"
-                           asChild
-                        >
-                           <Link href={item?.href || ''}>
-                              {item?.icon}
-                              <span className="ml-2">{item?.label}</span>
-                           </Link>
-                        </Button>
-                     ))}
+                     {teamItems
+                        .filter((item) => !item?.deleted)
+                        .map((item) => (
+                           <Button
+                              key={item?.label}
+                              variant={pathname.includes(item?.href || '') ? 'secondary' : 'ghost'}
+                              size="sm"
+                              className="w-full justify-start"
+                              asChild
+                           >
+                              <Link href={item?.href || ''}>
+                                 <span
+                                    className="flex items-center justify-center size-6 rounded-md"
+                                    style={{
+                                       backgroundColor: item?.color
+                                          ? `${item.color}`
+                                          : 'var(--primary-10)',
+                                    }}
+                                 >
+                                    {item?.icon}
+                                 </span>
+                                 <span className="ml-2">{item?.label}</span>
+                              </Link>
+                           </Button>
+                        ))}
                   </div>
                </div>
             )}

@@ -8,20 +8,16 @@ import { useViewStore } from '@/store/view-store';
 import { SearchIssues } from './search-issues';
 import { Issue, groupIssuesByStatus, Organization } from '@/lib/jazz-schema';
 import { useRouter, useParams } from 'next/navigation';
-import { Filter } from '@/components/layout/headers/issues/filter';
-import { Group } from 'jazz-tools';
 
 export default function Issues({
    issues,
    type,
-   organization,
 }: {
    issues: Issue[] | undefined;
    type: 'my-issues' | 'all-issues';
    organization?: Organization;
 }) {
-   const { isSearchOpen, isFilterOpen, searchQuery, filters, openFilter, closeFilter } =
-      useSearchStore();
+   const { searchQuery, filters } = useSearchStore();
    const { viewType } = useViewStore();
    const router = useRouter();
    const params = useParams();
@@ -30,38 +26,13 @@ export default function Issues({
    const issuesByStatus = groupIssuesByStatus(issues ?? []);
    const hasNoIssues = !issues || issues.length === 0;
 
-   // Get users and labels from organization for filter selectors
-   const getIssueOwnerUsers = () => {
-      if (!issues || issues.length === 0) return [];
-      // Use the first issue's owner group to get all profiles
-      const firstIssue = issues[0];
-      if (!firstIssue) return [];
-
-      // Filter out null profiles
-      const members = firstIssue._owner.castAs(Group).members;
-      return members.map((member) => member.account.profile).filter((profile) => profile !== null);
-   };
-
    const navigateToIssue = (issue: Issue) => {
       if (issue && issue.identifier) {
          router.push(`/${orgId}/issue/${issue.identifier}`);
       }
    };
 
-   const handleFilterOpenChange = (open: boolean) => {
-      // Directly control the filter state based on the requested state
-      if (open) {
-         openFilter();
-      } else {
-         closeFilter();
-      }
-   };
-
-   const hasActiveFiltering =
-      (isSearchOpen || isFilterOpen) &&
-      (searchQuery.trim() !== '' || Object.keys(filters).length > 0);
-
-   console.log('hasActiveFiltering', hasActiveFiltering);
+   const hasActiveFiltering = searchQuery.trim() !== '' || Object.keys(filters).length > 0;
 
    if (type === 'my-issues' && hasNoIssues) {
       return (
@@ -75,14 +46,6 @@ export default function Issues({
 
    return (
       <div className={cn('w-full h-full', viewType === 'grid' ? 'overflow-x-auto' : '')}>
-         <div className="px-6 mb-4 flex justify-end">
-            <Filter
-               users={getIssueOwnerUsers()}
-               labels={organization?.labels || undefined}
-               onOpenChange={handleFilterOpenChange}
-            />
-         </div>
-
          {hasActiveFiltering ? (
             <div className="px-6 mb-6">
                {safeIssues.length > 0 && (

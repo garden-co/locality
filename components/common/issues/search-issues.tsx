@@ -1,43 +1,41 @@
 'use client';
 
-// import { useIssuesStore } from '@/store/issues-store';
 import { useSearchStore } from '@/store/search-store';
 import { useEffect, useState } from 'react';
 import { IssueLine } from './issue-line';
-import { Issue, searchIssues, filterIssues } from '@/lib/jazz-schema';
+import { Issue, IssueList, searchIssues, filterIssues } from '@/lib/jazz-schema';
 
 interface SearchIssuesProps {
-   issues: Issue[];
+   issues: Issue[] | IssueList;
    onIssueClick?: (issue: Issue) => void;
 }
 
 export function SearchIssues({ issues, onIssueClick }: SearchIssuesProps) {
    const [filteredResults, setFilteredResults] = useState<Issue[]>([]);
-   // const { searchIssues } = useIssuesStore();
-   const { searchQuery, isSearchOpen, filters } = useSearchStore();
+   const { searchQuery, filters } = useSearchStore();
 
    useEffect(() => {
-      // Create a clean array of issues without nulls
-      const cleanIssues = issues.filter((issue): issue is Issue => issue !== null);
+      const cleanIssues: Issue[] = Array.from(issues).filter(
+         (issue): issue is Issue => issue !== null && issue !== undefined
+      );
 
-      let results = cleanIssues;
+      let results: Issue[] = [...cleanIssues];
 
-      // Apply filters first if any are active
       if (Object.keys(filters).length > 0) {
-         results = filterIssues(results, filters);
-         console.log('filtered results', results);
+         const filteredResults = filterIssues(cleanIssues, filters);
+         results = filteredResults.filter(
+            (issue): issue is Issue => issue !== null && issue !== undefined
+         );
       }
 
-      // Then apply search query if present
       if (searchQuery.trim() !== '') {
-         console.log('before search', results);
-         results = searchIssues(results, searchQuery);
-         console.log('search results', results, searchQuery);
+         const searchResults = searchIssues(results, searchQuery);
+         results = searchResults.filter(
+            (issue): issue is Issue => issue !== null && issue !== undefined
+         );
       }
 
-      console.log('last results', results);
-
-      setFilteredResults(results.filter((issue): issue is Issue => issue !== null));
+      setFilteredResults(results);
    }, [searchQuery, issues, filters]);
 
    console.log('filtered results', filteredResults);

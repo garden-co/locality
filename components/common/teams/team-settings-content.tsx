@@ -121,6 +121,11 @@ export default function TeamSettingsContent({ organization, teamId }: TeamSettin
 
    const isEditing = isEditingName || isEditingSlug;
 
+   const handleDeleteTeam = () => {
+      team.deleted = true;
+      toast.success('Team deleted successfully');
+   };
+
    return (
       <div className="max-w-[900px] mx-auto py-10 px-6">
          <header className="mb-10">
@@ -212,17 +217,10 @@ export default function TeamSettingsContent({ organization, teamId }: TeamSettin
             <div className="space-y-4">
                <div className="border rounded-md p-4">
                   <div className="flex justify-between items-center">
-                     <div className="text-sm font-medium">Change team visibility</div>
-                     <div className="text-xs text-muted-foreground">Available on Business</div>
-                  </div>
-               </div>
-
-               <div className="border rounded-md p-4">
-                  <div className="flex justify-between items-center">
                      <div className="text-sm font-medium">Delete team</div>
-                     <button className="text-xs text-destructive font-medium bg-destructive/10 px-2 py-1 rounded-md">
+                     <Button variant="destructive" size="sm" onClick={handleDeleteTeam}>
                         Delete team...
-                     </button>
+                     </Button>
                   </div>
                </div>
             </div>
