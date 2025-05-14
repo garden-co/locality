@@ -1,8 +1,10 @@
-# Slim Linear Clone
+# Locality - Slim Linear Clone powered by Jazz
 
 A modern issue tracking and project management application inspired by [Linear](https://linear.app), built with Next.js, React 19, TypeScript, and Tailwind CSS. This application uses Jazz as its data layer for real-time collaboration and state management.
 
-## Features
+![image](public/banner.png)
+
+## ✨ Features
 
 - **Organization Management**: Create and manage organizations with custom teams
 - **Issue Tracking**: Create, assign, and track issues with priorities and statuses
@@ -12,7 +14,7 @@ A modern issue tracking and project management application inspired by [Linear](
 - **Labels & Attachments**: Organize issues with labels and attach files
 - **Responsive Design**: Works on desktop and mobile devices
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 - **Frontend**: Next.js 15, React 19, TypeScript
 - **Styling**: Tailwind CSS, shadcn/ui components
@@ -24,7 +26,7 @@ A modern issue tracking and project management application inspired by [Linear](
 - **Editor**: TipTap
 - **Notifications**: Sonner
 
-## Architecture
+## 🏗️ Architecture
 
 The application is built using Next.js App Router architecture with a modern component-based approach:
 
@@ -35,7 +37,7 @@ The application is built using Next.js App Router architecture with a modern com
 - **Authentication & Authorization**: Built-in user management via Jazz Auth + Passkeys
 - **Real-time Collaboration**: Presence indicators and live updates
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 slim-linear-clone/
@@ -63,7 +65,7 @@ slim-linear-clone/
 └── store/                  # State management
 ```
 
-## Data Model
+## 📊 Data Model
 
 The application uses a rich data model defined in `jazz-schema.ts`:
 
@@ -77,7 +79,7 @@ The application uses a rich data model defined in `jazz-schema.ts`:
 
 The schema leverages Jazz's collaborative data types (CoMap, CoList, CoFeed) to enable real-time collaboration and updates.
 
-## UI Components
+## 🧩 UI Components
 
 The UI is built with a combination of:
 
@@ -87,7 +89,7 @@ The UI is built with a combination of:
 
 The design follows modern UI patterns with a clean, minimal aesthetic similar to Linear.
 
-## Getting Started
+## 🚀 Getting Started
 
 1. Clone the repository
 2. Install dependencies:
@@ -100,7 +102,7 @@ The design follows modern UI patterns with a clean, minimal aesthetic similar to
    ```
 4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## Development Practices
+## 💻 Development Practices
 
 - **TypeScript**: Strict typing for all components and functions
 - **Component Architecture**: Small, reusable components
@@ -108,6 +110,6 @@ The design follows modern UI patterns with a clean, minimal aesthetic similar to
 - **Responsive Design**: Mobile-first approach
 - **Accessibility**: Built on accessible primitives from Radix UI
 
-## License
+## 📄 License
 
 MIT

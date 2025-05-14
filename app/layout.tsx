@@ -18,6 +18,33 @@ export const metadata: Metadata = {
       default: 'Locality',
    },
    description: 'Project management interface inspired by Linear and powered by Jazz.',
+   icons: {
+      icon: [{ url: '/images/icon.png', type: 'image/png' }],
+      shortcut: '/images/icon.png',
+   },
+   openGraph: {
+      type: 'website',
+      locale: 'en_US',
+      url: 'https://locality.app/',
+      title: 'Locality',
+      description: 'Project management interface inspired by Linear and powered by Jazz.',
+      siteName: 'Locality',
+      images: [
+         {
+            url: '/banner.png',
+            width: 1200,
+            height: 630,
+            alt: 'Locality - Modern issue tracking and project management',
+         },
+      ],
+   },
+   twitter: {
+      card: 'summary_large_image',
+      title: 'Locality',
+      description: 'Project management interface inspired by Linear and powered by Jazz.',
+      images: ['/banner.png'],
+      creator: '@locality',
+   },
 };
 
 import { AppProviders } from '@/components/providers';
