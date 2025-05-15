@@ -46,10 +46,10 @@ export function LabelSelector({
 
    const handleLabelToggle = (label: typeof Label.prototype) => {
       // Create a new LabelList if selectedLabels is null
-      const currentLabels = selectedLabels || LabelList.create([]);
+      const currentLabels = selectedLabels || LabelList.create([], availableLabels._owner);
 
       const isSelected = currentLabels.some((l) => l?.id === label?.id);
-      const newLabels = LabelList.create([]);
+      const newLabels = LabelList.create([], availableLabels._owner);
 
       if (isSelected) {
          // Remove the label
@@ -76,10 +76,13 @@ export function LabelSelector({
       }
 
       // Create new label instance
-      const newLabel = Label.create({
-         name: newLabelName,
-         color: newLabelColor,
-      });
+      const newLabel = Label.create(
+         {
+            name: newLabelName,
+            color: newLabelColor,
+         },
+         availableLabels._owner
+      );
 
       // Add to organization labels via callback
       if (onCreateLabel) {
@@ -87,8 +90,8 @@ export function LabelSelector({
       }
 
       // Add to selected labels
-      const currentLabels = selectedLabels || LabelList.create([]);
-      const newLabels = LabelList.create([]);
+      const currentLabels = selectedLabels || LabelList.create([], availableLabels._owner);
+      const newLabels = LabelList.create([], availableLabels._owner);
 
       currentLabels.forEach((l) => {
          if (l) newLabels.push(l);

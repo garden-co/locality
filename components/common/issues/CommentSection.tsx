@@ -152,18 +152,18 @@ export function CommentSection({ issueData, currentUserId }: CommentSectionProps
 
       // Initialize comments if needed
       if (!issueData.comments) {
-         issueData.comments = CommentList.create([]);
+         issueData.comments = CommentList.create([], issueData._owner);
       }
 
       const commentData: CoMapInit<CommentCoValue> = {
          content,
          parentIssue: issueData,
-         reactions: ReactionsList.create([]),
-         attachments: AttachmentList.create([]),
+         reactions: ReactionsList.create([], issueData._owner),
+         attachments: AttachmentList.create([], issueData._owner),
          deleted: false,
       };
 
-      issueData.comments.push(CommentCoValue.create(commentData));
+      issueData.comments.push(CommentCoValue.create(commentData, issueData._owner));
 
       toast.success('Comment added');
       commentEditor.commands.clearContent();
@@ -199,7 +199,7 @@ export function CommentSection({ issueData, currentUserId }: CommentSectionProps
 
       // Initialize reactions if needed
       if (!comment.reactions) {
-         comment.reactions = ReactionsList.create([]);
+         comment.reactions = ReactionsList.create([], issueData._owner);
       }
 
       if (add) {
@@ -228,13 +228,13 @@ export function CommentSection({ issueData, currentUserId }: CommentSectionProps
          content,
          parentIssue: issueData,
          parentComment: parentComment,
-         reactions: ReactionsList.create([]),
-         attachments: AttachmentList.create([]),
+         reactions: ReactionsList.create([], issueData._owner),
+         attachments: AttachmentList.create([], issueData._owner),
          deleted: false,
       };
 
       // Add the reply to the comments list
-      issueData.comments.push(CommentCoValue.create(commentData));
+      issueData.comments.push(CommentCoValue.create(commentData, issueData._owner));
    };
 
    // Filter out any null comments to avoid TypeScript issues

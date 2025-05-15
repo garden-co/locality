@@ -103,20 +103,22 @@ export function Filter({ users = [], labels, onOpenChange }: FilterProps) {
 
                   <div className="filter-selectors">
                      <h4 className="text-xs font-medium text-muted-foreground mb-1">Labels</h4>
-                     <LabelSelector
-                        availableLabels={labels || LabelList.create([])}
-                        selectedLabels={
-                           filters.labels ? LabelList.create(filters.labels as Label[]) : null
-                        }
-                        onChange={(newLabels) => {
-                           if (newLabels) {
-                              const labelArray = [...newLabels].filter(Boolean) as Label[];
-                              setLabelsFilter(labelArray);
-                           } else {
-                              setLabelsFilter(undefined);
+                     {labels && (
+                        <LabelSelector
+                           availableLabels={labels}
+                           selectedLabels={
+                              filters.labels ? LabelList.create(filters.labels as Label[]) : null
                            }
-                        }}
-                     />
+                           onChange={(newLabels) => {
+                              if (newLabels) {
+                                 const labelArray = [...newLabels].filter(Boolean) as Label[];
+                                 setLabelsFilter(labelArray);
+                              } else {
+                                 setLabelsFilter(undefined);
+                              }
+                           }}
+                        />
+                     )}
                   </div>
                </div>
             </PopoverContent>

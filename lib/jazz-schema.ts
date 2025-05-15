@@ -138,7 +138,7 @@ export class Issue extends CoMap {
    removeIssueLabel(label: Label) {
       if (!this.labels) return;
       const filtered = this.labels.filter((l) => l !== label);
-      const newLabels = LabelList.create([]);
+      const newLabels = LabelList.create([], this._owner);
       filtered.forEach((l) => {
          if (l) newLabels.push(l);
       });

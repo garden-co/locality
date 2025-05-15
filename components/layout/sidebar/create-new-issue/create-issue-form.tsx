@@ -103,10 +103,11 @@ export function CreateIssueForm({ organization, teamId, closeModal }: CreateIssu
 
    // Get data from deeply loaded organization
    const teams = orgWithData.teams;
-   const organizationLabels = orgWithData.labels || LabelList.create([]);
 
    // Get the selected team
    const selectedTeam = addIssueForm.team as Team;
+
+   const organizationLabels = orgWithData.labels || LabelList.create([], selectedTeam._owner);
 
    // Get users from the team's issues owner (if available)
    const users =

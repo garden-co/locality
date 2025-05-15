@@ -18,7 +18,8 @@ export function IssueAttachments({ issueData }: IssueAttachmentsProps) {
    const [error, setError] = useState<string | null>(null);
 
    // Use a local variable for attachments to avoid mutating props
-   const attachments: AttachmentList = issueData.attachments ?? AttachmentList.create([]);
+   const attachments: AttachmentList =
+      issueData.attachments ?? AttachmentList.create([], issueData._owner);
 
    const handleFileClick = () => {
       fileInputRef.current?.click();
@@ -67,23 +68,29 @@ export function IssueAttachments({ issueData }: IssueAttachmentsProps) {
             // const fileStream = await FileStream.createFromBlob(file, {});
 
             // Create attachment with both file (required) and image properties
-            attachment = Attachment.create({
-               name: file.name,
-               //    file: fileStream, // File is required by the model
-               image: image, // Store the image for display
-               type: fileType,
-            });
+            attachment = Attachment.create(
+               {
+                  name: file.name,
+                  //    file: fileStream, // File is required by the model
+                  image: image, // Store the image for display
+                  type: fileType,
+               },
+               issueData._owner
+            );
          } else {
             // For non-images, use FileStream and save to attachment.file
             const fileStream = await FileStream.createFromBlob(file, {
                onProgress: (p: number) => setProgress(Math.round(p * 100)),
             });
 
-            attachment = Attachment.create({
-               name: file.name,
-               file: fileStream, // Use file property for non-images
-               type: fileType,
-            });
+            attachment = Attachment.create(
+               {
+                  name: file.name,
+                  file: fileStream, // Use file property for non-images
+                  type: fileType,
+               },
+               issueData._owner
+            );
          }
 
          // Add to the issue

@@ -23,10 +23,13 @@ interface IssueSidebarProps {
 export function IssueSidebar({ issueData }: IssueSidebarProps) {
    const issueOrganization = issueData?.parentOrganization;
 
-   const profiles = issueData._owner.castAs(Group).members.map((member) => member.account.profile).filter(Boolean);
+   const profiles = issueData._owner
+      .castAs(Group)
+      .members.map((member) => member.account.profile)
+      .filter(Boolean);
 
    // Get organization labels
-   const organizationLabels = issueOrganization?.labels || LabelList.create([]);
+   const organizationLabels = issueOrganization?.labels || LabelList.create([], issueData._owner);
 
    const handleStatusChange = (newStatus: typeof StatusType) => {
       if (issueData && newStatus) {
